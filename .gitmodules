@@ -1,0 +1,3 @@
+[submodule "toolchain/sources/gcc"]
+	path = toolchain/sources/gcc
+	url = git://gcc.gnu.org/git/gcc.git
