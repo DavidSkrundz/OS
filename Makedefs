@@ -28,3 +28,11 @@ assert_defined = \
 __check_defined = \
   $(if $(value $1),, \
     $(error Undefined $1 $(if $2,($2))))
+
+ifeq ($(UNAME), Darwin)
+  # Get the path where brew installed the library
+  #
+  # Calling: `@:$(call brew_path, lib)`
+  brew_path = \
+	$(shell brew info $1 | head -n4 | tail -n1 | cut -d' ' -f1)
+endif
