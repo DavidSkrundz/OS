@@ -17,3 +17,14 @@ endif
 
 include $(TOPDIR)/Make.defaults
 include $(TOPDIR)/Make.rules
+
+
+# Assert that given variables are set and all have non-empty values
+#
+# Calling: `@:$(call assert_defined, var1 var2 ..., description(optional))`
+assert_defined = \
+  $(foreach 1,$1, \
+    $(call __check_defined,$1,$(strip $(value 2))))
+__check_defined = \
+  $(if $(value $1),, \
+    $(error Undefined $1 $(if $2,($2))))
