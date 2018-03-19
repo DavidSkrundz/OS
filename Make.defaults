@@ -1,0 +1,15 @@
+# Clear builtin rules
+.SUFFIXES:
+
+# Goal defaults
+.DEFAULT_GOAL := all
+.PHONY: all
+.PHONY: clean
+
+# Shell
+SHELL := /bin/bash
+UNAME := $(shell uname -s)
+
+# Directories
+BUILD_DIR := .build
+SRC_DIR := src
