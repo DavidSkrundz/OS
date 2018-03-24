@@ -1,0 +1,15 @@
+diff --git a/mingw-w64-libraries/winpthreads/src/clock.c b/mingw-w64-libraries/winpthreads/src/clock.c
+index 5ad710b2..1643cf9a 100644
+--- a/mingw-w64-libraries/winpthreads/src/clock.c
++++ b/mingw-w64-libraries/winpthreads/src/clock.c
+@@ -134,8 +134,8 @@ int clock_gettime(clockid_t clock_id, struct timespec *tp)
+             if (QueryPerformanceCounter(&pc) == 0)
+                 return lc_set_errno(EINVAL);
+ 
+-            tp->tv_sec = pc.QuadPart / pf.QuadPart;
+-            tp->tv_nsec = (int) (((pc.QuadPart % pf.QuadPart) * POW10_9 + (pf.QuadPart >> 1)) / pf.QuadPart);
++            tp->tv_sec = (time_t)(pc.QuadPart / (double)pf.QuadPart);
++			tp->tv_nsec = (int) (((__int64)(pc.QuadPart - tp->tv_sec * (double)pf.QuadPart) * POW10_9 + (pf.QuadPart >> 1)) / (double)pf.QuadPart);
+             if (tp->tv_nsec >= POW10_9) {
+                 tp->tv_sec ++;
+                 tp->tv_nsec -= POW10_9;

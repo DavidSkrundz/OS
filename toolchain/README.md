@@ -32,6 +32,7 @@ make [-jn]
 - `NATIVE_GCC`
 - `CROSS_BINUTILS`
 - `CROSS_GCC`
+- `CROSS_MINGW`
 
 ## Cleaning
 

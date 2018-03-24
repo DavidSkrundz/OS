@@ -1,0 +1,112 @@
+LIB =
+
+
+.PHONY: CROSS_MINGW
+CROSS_MINGW:
+	@$(MAKE) _I686_W64_MINGW32_MINGW
+	@$(MAKE) _X86_64_W64_MINGW32_MINGW
+
+.PHONY: _I686_W64_MINGW32_MINGW
+_I686_W64_MINGW32_MINGW: TARGET=i686-w64-mingw32
+_I686_W64_MINGW32_MINGW: GOALS=all-gcc install-gcc
+_I686_W64_MINGW32_MINGW: GCC_TARGET_FLAGS=--target=$(TARGET) \
+                                          --enable-targets=all \
+                                          --with-sysroot=$(PREFIX)/$(TARGET) \
+                                          --enable-threads=win32
+_I686_W64_MINGW32_MINGW:
+	@$(MAKE) .MINGW_HEADERS TARGET=$(TARGET) LIB=lib32
+	@$(MAKE) .GCC TARGET=$(TARGET) GOALS="$(GOALS)" GCC_TARGET_FLAGS="$(GCC_TARGET_FLAGS)"
+	@$(MAKE) .MINGW_CRT TARGET=$(TARGET)
+	@$(MAKE) .MINGW_GCC TARGET=$(TARGET)
+	@$(MAKE) .WINPTHREAD TARGET=$(TARGET)
+
+.PHONY: _X86_64_W64_MINGW32_MINGW
+_X86_64_W64_MINGW32_MINGW: TARGET=x86_64-w64-mingw32
+_X86_64_W64_MINGW32_MINGW: GOALS=all-gcc install-gcc
+_X86_64_W64_MINGW32_MINGW: GCC_TARGET_FLAGS=--target=$(TARGET) \
+                                            --enable-targets=all \
+                                            --with-sysroot=$(PREFIX)/$(TARGET) \
+                                            --enable-threads=win32
+_X86_64_W64_MINGW32_MINGW:
+	@$(MAKE) .MINGW_HEADERS TARGET=$(TARGET) LIB=lib64
+	@$(MAKE) .GCC TARGET=$(TARGET) GOALS="$(GOALS)" GCC_TARGET_FLAGS="$(GCC_TARGET_FLAGS)"
+	@$(MAKE) .MINGW_CRT TARGET=$(TARGET)
+	@$(MAKE) .MINGW_GCC TARGET=$(TARGET)
+	@$(MAKE) .WINPTHREAD TARGET=$(TARGET)
+
+
+.PHONY: .MINGW_HEADERS
+.MINGW_HEADERS:
+	@:$(call assert_defined, TARGET, Missing TARGET)
+	@:$(call assert_defined, LIB, Missing LIB)
+	@cd sources/mingw-w64/ && git reset --hard && git clean -fd
+	@mkdir -p $(MINGW_HEADERS_PATH)
+	@echo Configuring $(TARGET)-mingw-headers
+	@cd $(MINGW_HEADERS_PATH) && ../../sources/mingw-w64/mingw-w64-headers/configure \
+		--build=$(shell gcc -dumpmachine) \
+		--host=$(TARGET) \
+		--prefix=$(PREFIX)/$(TARGET)/$(TARGET) \
+			1> ../$(TARGET)-mingw-headers-config.out.txt \
+			2> ../$(TARGET)-mingw-headers-config.err.txt
+	@echo Building $(TARGET)-mingw-headers install-strip
+	@time $(MAKE) -C $(MINGW_HEADERS_PATH) install-strip \
+		1> $(BUILD_DIR)/$(TARGET)-mingw-headers-install-strip.out.txt \
+		2> $(BUILD_DIR)/$(TARGET)-mingw-headers-install-strip.err.txt
+	@-ln -s $(PREFIX)/$(TARGET)/$(TARGET)/lib $(PREFIX)/$(TARGET)/$(TARGET)/$(LIB)
+	@-ln -s $(PREFIX)/$(TARGET)/$(TARGET) $(PREFIX)/$(TARGET)/mingw
+
+.PHONY: .MINGW_CRT
+.MINGW_CRT:
+	@:$(call assert_defined, TARGET, Missing TARGET)
+	@cd sources/mingw-w64/ && git reset --hard && git clean -fd
+	@mkdir -p $(MINGW_CRT_PATH)
+	@echo Configuring $(TARGET)-mingw-crt
+	@cd $(MINGW_CRT_PATH) && ../../sources/mingw-w64/configure \
+		--build=$(shell gcc -dumpmachine) \
+		--host=$(TARGET) \
+		--prefix=$(PREFIX)/$(TARGET)/$(TARGET) \
+		--with-sysroot=$(PREFIX)/$(TARGET)/$(TARGET) \
+			1> ../$(TARGET)-mingw-crt-config.out.txt \
+			2> ../$(TARGET)-mingw-crt-config.err.txt
+	@echo Building $(TARGET)-mingw-crt all
+	@time $(MAKE) -C $(MINGW_CRT_PATH) all \
+		1> $(BUILD_DIR)/$(TARGET)-mingw-crt-all.out.txt \
+		2> $(BUILD_DIR)/$(TARGET)-mingw-crt-all.err.txt
+	@echo Building $(TARGET)-mingw-crt install-strip
+	@time $(MAKE) -C $(MINGW_CRT_PATH) install-strip \
+		1> $(BUILD_DIR)/$(TARGET)-mingw-crt-install-strip.out.txt \
+		2> $(BUILD_DIR)/$(TARGET)-mingw-crt-install-strip.err.txt
+
+.PHONY: .MINGW_GCC
+.MINGW_GCC:
+	@:$(call assert_defined, TARGET, Missing TARGET)
+	@echo Building $(TARGET)-mingw-gcc all
+	@time $(MAKE) -C $(GCC_PATH) all \
+		1> $(BUILD_DIR)/$(TARGET)-mingw-gcc-all.out.txt \
+		2> $(BUILD_DIR)/$(TARGET)-mingw-gcc-all.err.txt
+	@echo Building $(TARGET)-mingw-gcc install-strip
+	@time $(MAKE) -C $(GCC_PATH) install-strip \
+		1> $(BUILD_DIR)/$(TARGET)-mingw-gcc-install-strip.out.txt \
+		2> $(BUILD_DIR)/$(TARGET)-mingw-gcc-install-strip.err.txt
+	@-ln -s $(PREFIX)/$(TARGET)/lib/gcc/$(TARGET)/lib/libgcc_s.a $(PREFIX)/$(TARGET)/$(TARGET)/lib/
+
+.PHONY: .WINPTHREAD
+.WINPTHREAD:
+	@:$(call assert_defined, TARGET, Missing TARGET)
+	@cd sources/mingw-w64/ && git reset --hard && git clean -fd
+	@-cd sources/mingw-w64/ && git apply $(PREFIX)/../patches/mingw/$(TARGET)-mingw-*.patch
+	@mkdir -p $(WINPTHREAD_PATH)
+	@echo Configuring $(TARGET)-winpthread
+	@cd $(WINPTHREAD_PATH) && ../../sources/mingw-w64/mingw-w64-libraries/winpthreads/configure \
+		--host=$(TARGET) \
+		--prefix=$(PREFIX)/$(TARGET)/$(TARGET) \
+			1> ../$(TARGET)-winpthread-config.out.txt \
+			2> ../$(TARGET)-winpthread-config.err.txt
+	@echo Building $(TARGET)-winpthread all
+	@time $(MAKE) -C $(WINPTHREAD_PATH) all \
+		1> $(BUILD_DIR)/$(TARGET)-winpthread-all.out.txt \
+		2> $(BUILD_DIR)/$(TARGET)-winpthread-all.err.txt
+	@echo Building $(TARGET)-winpthread install-strip
+	@time $(MAKE) -C $(WINPTHREAD_PATH) install-strip \
+		1> $(BUILD_DIR)/$(TARGET)-winpthread-install-strip.out.txt \
+		2> $(BUILD_DIR)/$(TARGET)-winpthread-install-strip.err.txt
