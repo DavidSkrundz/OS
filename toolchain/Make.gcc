@@ -1,0 +1,73 @@
+GCC_PLATFORM_FLAGS =
+GCC_TARGET_FLAGS =
+
+
+.PHONY: NATIVE_GCC
+NATIVE_GCC: TARGET=native
+NATIVE_GCC: GOALS=all install-strip
+NATIVE_GCC: .GCC
+	@
+
+
+.PHONY: CROSS_GCC
+CROSS_GCC: GOALS=all-gcc all-target-libgcc install-gcc install-target-libgcc
+CROSS_GCC:
+	@$(MAKE) _I386_ELF_GCC
+	@$(MAKE) _X86_64_ELF_GCC
+
+.PHONY: _I386_ELF_GCC
+_I386_ELF_GCC: CPP=cpp
+_I386_ELF_GCC: GOALS=all-gcc all-target-libgcc install-gcc install-target-libgcc
+_I386_ELF_GCC: TARGET=i386-elf
+_I386_ELF_GCC: GCC_TARGET_FLAGS=--target=$(TARGET)
+_I386_ELF_GCC: .GCC
+	@
+
+.PHONY: _X86_64_ELF_GCC
+_X86_64_ELF_GCC: CPP=cpp
+_X86_64_ELF_GCC: GOALS=all-gcc all-target-libgcc install-gcc install-target-libgcc
+_X86_64_ELF_GCC: TARGET=x86_64-elf
+_X86_64_ELF_GCC: GCC_TARGET_FLAGS=--target=$(TARGET)
+_X86_64_ELF_GCC: .GCC
+	@
+
+ifeq ($(UNAME), Darwin)
+  .GCC: GCC_PLATFORM_FLAGS=\
+	--with-gmp=$(call brew_path, gmp) \
+	--with-mpfr=$(call brew_path, mpfr) \
+	--with-mpc=$(call brew_path, libmpc) \
+	--with-isl=$(call brew_path, isl)
+endif
+.PHONY: .GCC
+.GCC: | $(BUILD_DIR) $(PREFIX)
+	@:$(call assert_defined, GOALS, Missing GOALS)
+	@:$(call assert_defined, TARGET, Missing TARGET)
+	@cd sources/gcc/ && git reset --hard && git clean -fd
+	@-cd sources/gcc/ && git apply $(PREFIX)/../patches/gcc/all-*.patch
+	@mkdir -p $(GCC_PATH)
+	@echo Configuring $(TARGET)-gcc
+	@cd $(GCC_PATH) && ../../sources/gcc/configure \
+		--prefix=$(PREFIX)/$(TARGET) \
+		--with-pkgversion="$(PACKAGE_NAME) $(TARGET) GCC" \
+		--enable-languages=c,c++ \
+		--disable-nls \
+		--disable-multilib \
+		--with-system-zlib \
+		--enable-checking=release \
+		$(GCC_PLATFORM_FLAGS) \
+		$(GCC_TARGET_FLAGS) \
+			1> ../$(TARGET)-gcc-config.out.txt \
+			2> ../$(TARGET)-gcc-config.err.txt
+	@if [[ "$(TARGET)" == "native" ]]; then \
+		echo Building $(TARGET)-gcc all \(initial\); \
+	fi
+	@-if [[ "$(TARGET)" == "native" ]]; then \
+		time $(MAKE) -C $(GCC_PATH) all \
+			1> $(BUILD_DIR)/$(TARGET)-gcc-all_1.out.txt \
+			2> $(BUILD_DIR)/$(TARGET)-gcc-all_1.err.txt; \
+	fi
+	@$(foreach goal,$(GOALS), echo Building $(TARGET)-gcc $(goal) && \
+		time $(MAKE) -C $(GCC_PATH) $(goal) \
+			1> $(BUILD_DIR)/$(TARGET)-gcc-$(goal).out.txt \
+			2> $(BUILD_DIR)/$(TARGET)-gcc-$(goal).err.txt \
+		&&) true

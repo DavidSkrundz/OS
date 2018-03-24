@@ -30,10 +30,13 @@ make [-jn]
 
 - `NATIVE_BINUTILS`
 - `NATIVE_GCC`
+- `CROSS_BINUTILS`
+- `CROSS_GCC`
 
 ## Cleaning
 
 ```bash
 make clean           # Clean intermediate files
+make clean-cross     # Clean intermediate files and cross-compilers
 make clean-toolchain # Clean intermediate files and compilers
 ```

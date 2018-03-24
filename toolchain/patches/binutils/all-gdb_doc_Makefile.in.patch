@@ -1,0 +1,13 @@
+diff --git a/gdb/doc/Makefile.in b/gdb/doc/Makefile.in
+index 0323bc4ecb..7ee6915aad 100644
+--- a/gdb/doc/Makefile.in
++++ b/gdb/doc/Makefile.in
+@@ -677,7 +677,7 @@ distclean: clean
+ maintainer-clean realclean: distclean
+ 	rm -f GDBvn.texi *.info* *.dvi *.ps *.html *.pdf $(MANS)
+ 
+-install: install-info install-man
++install: install-man
+ 
+ uninstall: uninstall-info uninstall-man
+ 
