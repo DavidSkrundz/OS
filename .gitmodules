@@ -4,3 +4,6 @@
 [submodule "toolchain/sources/binutils"]
 	path = toolchain/sources/binutils
 	url = git://sourceware.org/git/binutils-gdb.git
+[submodule "toolchain/sources/mingw-w64"]
+	path = toolchain/sources/mingw-w64
+	url = https://git.code.sf.net/p/mingw-w64/mingw-w64
