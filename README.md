@@ -18,3 +18,13 @@ An Operating System
 - `sudo apt-get install libmpc-dev`
 - `sudo apt-get install binutils-dev zlib1g-dev`
 - `sudo apt-get install bison texinfo flex`
+
+
+## Building
+
+First build the toolchain:
+
+```Bash
+cd toolchain
+make [-jn]
+```
