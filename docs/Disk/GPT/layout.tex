@@ -1,0 +1,16 @@
+\subsection{Layout}
+
+\begin{center}
+\begin{bytefield}{24}
+	\memsection{LBA 0}{}{2}{Protective MBR}\\
+	\begin{rightwordgroup}{Primary GPT}
+		\memsection{LBA 1}{}{2}{Primary GPT Header}\\
+		\memsection{LBA 2}{}{3}{Partiton Entries\\(128 bytes * 128)}
+	\end{rightwordgroup}\\
+	\memsection{LBA 34}{LBA $-$34}{5}{--- Partitions ---}\\
+	\begin{rightwordgroup}{Secondary GPT}
+		\memsection{}{LBA $-$2}{3}{Partiton Entries\\(128 bytes * 128)}\\
+		\memsection{}{LBA $-$1}{2}{Secondary GPT Header}
+	\end{rightwordgroup}\\
+\end{bytefield}
+\end{center}

@@ -1,0 +1,16 @@
+\subsection{Partition Attribute Bits}
+
+\begin{center}
+\begin{bytefield}{16}
+	\bitbox{4}{0}
+	\bitbox{12}{Platform required}\\
+	\bitbox{4}{1}
+	\bitbox{12}{EFI should ignore}\\
+	\bitbox{4}{2}
+	\bitbox{12}{Legacy BIOS bootable}\\
+	\bitbox{4}{3$-$47}
+	\bitbox{12}{Reserved}\\
+	\bitbox{4}{48$-$63}
+	\bitbox{12}{Defined by type}\\
+\end{bytefield}
+\end{center}

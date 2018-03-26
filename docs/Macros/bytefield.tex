@@ -17,3 +17,17 @@
 	}
 	\bitbox{16}{#4}
 }
+
+% A map function for faking 64bit formatting in the space of 32 bits.
+%
+% Usage: \begin{bytefield}[bitformatting=\fakesixtyfourbits,endianness=big]{32}
+\newcommand{\fakesixtyfourbits}[1]{
+	\tiny
+	\ifnum#1=1234567890
+		#1
+	\else
+		\count32=#1
+		\advance\count32 by #1
+		\the\count32
+	\fi
+}

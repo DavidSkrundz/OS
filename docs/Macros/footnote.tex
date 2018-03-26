@@ -1,0 +1,6 @@
+\newcounter{footnoteCounter}[chapter]
+% Replaces \footnotetext
+\newcommand{\autofootnote}[1]{
+	\stepcounter{footnoteCounter}
+	\footnotetext[\value{footnoteCounter}]{#1}
+}

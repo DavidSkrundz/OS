@@ -1,0 +1,37 @@
+\subsection{Header}
+
+\begin{samepage}
+\begin{center}
+\begin{bytefield}[bitformatting=\fakesixtyfourbits,endianness=big]{32}
+	\bitheader{0,8,16,24,32}\\
+	\begin{rightwordgroup}{Signature\footnotemark}
+		\bitboxes{4}{{\texttt{45h}} {\texttt{46h}} {\texttt{49h}} {\texttt{20h}} {\texttt{50h}} {\texttt{41h}} {\texttt{52h}} {\texttt{54h}}}
+	\end{rightwordgroup}\\
+	\begin{rightwordgroup}{Revision | Header Size}
+		\bitboxes{4}{{\texttt{00h}} {\texttt{00h}} {\texttt{01h}} {\texttt{00h}} {\texttt{5Ch}} {\texttt{00h}} {\texttt{00h}} {\texttt{00h}}}
+	\end{rightwordgroup}\\
+	\begin{rightwordgroup}{Reserved}
+		\bitbox{16}{Header CRC32\footnotemark}
+		\bitboxes{4}{{\texttt{00h}} {\texttt{00h}} {\texttt{00h}} {\texttt{00h}}}
+	\end{rightwordgroup}\\
+	\wordbox{1}{LBA of this header}\\
+	\wordbox{1}{LBA of other header}\\
+	\wordbox{1}{LBA of first usable sector}\\
+	\wordbox{1}{LBA of last usable sector}\\
+	\wordbox{2}{Disk UUID}\\
+	\wordbox{1}{LBA of first partition entry\footnotemark}\\
+	\begin{rightwordgroup}{Partition entry size}
+		\bitbox{16}{Number of partition entries}
+		\bitboxes{4}{{\texttt{80h}} {\texttt{00h}} {\texttt{00h}} {\texttt{00h}}}
+	\end{rightwordgroup}\\
+	\bitbox{16}{Partition Entries CRC32\footnotemark}
+	\bitbox[lrt]{16}{}\\
+	\wordbox[lrb]{3}{Zeros for rest of sector}\\
+\end{bytefield}
+\end{center}
+\end{samepage}
+
+\autofootnote{\url{https://en.wikipedia.org/wiki/GUID_Partition_Table}}
+\autofootnote{Zeroed during calculation}
+\autofootnote{Always 2 in primary header}
+\autofootnote{Calculated before Header CRC32}

@@ -1,0 +1,26 @@
+\subsection{Protective Header}
+
+\begin{samepage}
+\begin{center}
+\begin{bytefield}{32}
+	\wordbox[lrt]{4}{Bootloader code (446 bytes)}\\
+	\begin{rightwordgroup}{First partition entry}
+		\bitbox[lrb]{16}{}
+		\bitbox{8}{\texttt{00h}}
+		\bitbox{8}{\texttt{00h}}\\
+		\bitboxes{8}{{\texttt{01h}} {\texttt{00h}} {\texttt{EEh}} {\texttt{FEh}}}\\
+		\bitboxes{8}{{\texttt{FFh}} {\texttt{FFh}} {\texttt{01h}} {\texttt{00h}}}\\
+		\bitboxes{8}{{\texttt{00h}} {\texttt{00h}} {\texttt{XXh}} {\texttt{XXh}}}\\
+		\bitboxes{8}{{\texttt{XXh}} {\texttt{XXh}}}
+		\bitbox[lrt]{16}{}
+	\end{rightwordgroup}\\
+	\wordbox[lr]{1}{}\\
+	\wordbox[lr]{1}{3 blank partitions\\(\texttt{00h} * 16 * 3)}\\
+	\wordbox[lr]{1}{}\\
+	\begin{rightwordgroup}{Boot Signature}
+		\bitbox[lrb]{16}{}
+		\bitboxes{8}{{\texttt{55h}} {\texttt{AAh}}}
+	\end{rightwordgroup}\\
+\end{bytefield}
+\end{center}
+\end{samepage}

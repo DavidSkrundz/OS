@@ -1,0 +1,15 @@
+\subsection{Partition Entry}
+
+\begin{center}
+\begin{bytefield}[bitformatting=\fakesixtyfourbits,endianness=big]{32}
+	\bitheader{0,8,16,24,32}\\
+	\wordbox{2}{Partition Type UUID}\\
+	\wordbox{2}{Partition UUID}\\
+	\wordbox{1}{First LBA}\\
+	\wordbox{1}{Last LBA}\\
+	\wordbox{1}{Attribute Flags}\\
+	\wordbox{9}{Partition Name (72 bytes)\footnotemark}\\
+\end{bytefield}
+\end{center}
+
+\autofootnote{36 UTF-16LE code units}
