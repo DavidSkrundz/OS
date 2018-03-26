@@ -13,3 +13,6 @@ UNAME := $(shell uname -s)
 # Directories
 BUILD_DIR := .build
 SRC_DIR := src
+
+# Tools
+TEX := xelatex

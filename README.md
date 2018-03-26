@@ -13,14 +13,23 @@ An Operating System
 - Install [brew](https://brew.sh)
 - `brew install make --with-default-names`
 - `brew install gmp mpfr libmpc isl`
+- `brew cask install mactex`
 
 ###### Ubuntu
 - `sudo apt-get install libmpc-dev`
 - `sudo apt-get install binutils-dev zlib1g-dev`
 - `sudo apt-get install bison texinfo flex`
+- `sudo apt-get install texlive-full`
 
 
 ## Building
+
+(Optional) Documentation:
+
+```Bash
+cd docs
+make
+```
 
 First build the toolchain:
 
