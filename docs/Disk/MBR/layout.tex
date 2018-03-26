@@ -1,0 +1,9 @@
+\subsection{Layout}
+
+\begin{center}
+\begin{bytefield}{16}
+	\memsection{0x0000 0000}{0x0000 01FF}{3}{MBR Header}\\
+	\memsection{0x0000 0200}{0x0000 XXFF}{5}{Reserved Sectors\\(Bootloader Stage 2)}\\
+	\memsection{0x0000 YY00}{End of disk}{7}{--- Partitions ---}\\
+\end{bytefield}
+\end{center}

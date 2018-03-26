@@ -1,0 +1,19 @@
+\begin{samepage}
+\subsection{Header}
+
+\begin{center}
+\begin{bytefield}{32}
+	\wordbox[lrt]{4}{Bootloader code (446 bytes)}\\
+	\bitbox[lrb]{16}{}
+	\bitbox[lrt]{16}{}\\
+	\wordbox[lr]{1}{}\\
+	\wordbox[lr]{1}{Partition entries (16 bytes x 4)}\\
+	\wordbox[lr]{1}{}\\
+	\begin{rightwordgroup}{Boot Signature}
+		\bitbox[lrb]{16}{}
+		\bitbox{8}{\texttt{55h}}
+		\bitbox{8}{\texttt{AAh}}
+	\end{rightwordgroup}\\
+\end{bytefield}
+\end{center}
+\end{samepage}

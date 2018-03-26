@@ -1,0 +1,35 @@
+\subsection{Partition Entry}
+
+\begin{center}
+\begin{bytefield}{32}
+	\bitheader[endianness=big]{0,7,8,13,14,15,16,23,24,31}\\
+	\begin{rightwordgroup}{CHS of first sector}
+		\bitbox{8}{Status}
+		\bitbox{8}{h\textsubscript{7-0}}
+		\bitbox{2}{c\textsubscript{9-8}}
+		\bitbox{6}{s\textsubscript{5-0}}
+		\bitbox{8}{c\textsubscript{7-0}}
+	\end{rightwordgroup}\\
+	\begin{rightwordgroup}{CHS of last sector}
+		\bitbox{8}{Type}
+		\bitbox{8}{h\textsubscript{7-0}}
+		\bitbox{2}{c\textsubscript{9-8}}
+		\bitbox{6}{s\textsubscript{5-0}}
+		\bitbox{8}{c\textsubscript{7-0}}
+	\end{rightwordgroup}\\
+	\wordbox{1}{LBA of first sector}\\
+	\wordbox{1}{Number of sectors}\\
+\end{bytefield}
+\end{center}
+
+Status:
+\begin{itemize}
+	\item \texttt{0x80} --- active
+	\item \texttt{0x00} --- inactive
+	\item other --- invalid
+\end{itemize}
+
+Type: (\url{https://en.wikipedia.org/wiki/Partition_type})
+\begin{itemize}
+	\item \texttt{00h} --- empty
+\end{itemize}
