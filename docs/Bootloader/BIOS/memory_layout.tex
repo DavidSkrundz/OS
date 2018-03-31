@@ -1,0 +1,22 @@
+\subsection{Memory Layout}
+
+\begin{center}
+\begin{bytefield}{32}
+	\memsection{0x0000}{}{2}{Real Mode IVT}\\
+	\memsection{0x0400}{}{2}{BIOS data area}\\
+	\begin{rightwordgroup}{Up to 29.25 KiB}
+		\memsection{0x0500}{}{4}{--- Free ---}
+	\end{rightwordgroup}\\
+	\memsection{0x7A00\footnotemark}{}{2}{\texttt{Relocated Bootsector}}\\
+	\memsection{0x7C00}{}{2}{\texttt{Loaded Bootsector}}\\
+	\begin{rightwordgroup}{480.5 KiB}
+		\memsection{0x7E00}{}{3}{--- Free ---}\\
+		\memsection{}{}{2}{\texttt{$\uparrow$ Stack $\uparrow$}}
+	\end{rightwordgroup}\\
+	\memsection{0x80000}{}{4}{Free up to EBDA\footnotemark}\\
+	\memsection{0xA0000}{0xFFFFF}{4}{Video memory | ROM}\\
+\end{bytefield}
+\end{center}
+
+\autofootnote{\texttt{0x7A00} is for a one sector Stage 2. Its lower for a larger Stage}
+\autofootnote{The EBDA ends at \texttt{0x9FFFF} (See \texttt{int 0x12})}

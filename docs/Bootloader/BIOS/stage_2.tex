@@ -1,0 +1,17 @@
+\begin{samepage}
+\subsection{Stage 2}
+
+\begin{enumerate}
+	\item Relocate Stage 2 to the \texttt{Relocated Bootsector} area
+	\item Load the VBR to boot into the \texttt{Loaded Bootsector} area
+	\item{} [GPT Only] Create an MBR partition entry for the VBR
+	\item Ensure the following registers have the values:
+	\begin{description}
+		\item \texttt{CS:IP $=$ 0000h:7C00h}
+		\item \texttt{DL} preserved (boot drive)
+		\item \texttt{DS:SI $=$} pointer to MBR partition table entry of the loaded VBR
+		\item{} [GPT Only] \texttt{EAX $=$ 54504721h}
+	\end{description}
+	\item Pass control to the VBR
+\end{enumerate}
+\end{samepage}

@@ -1,0 +1,41 @@
+\section{EFI}
+
+The UEFI bootloader is stored in a \texttt{FAT32} partition with the following structure:\\\\
+\begin{forest}
+	for tree={
+		font=\ttfamily,
+		grow'=0,
+		child anchor=west,
+		parent anchor=south,
+		anchor=west,
+		calign=first,
+		edge path={
+			\noexpand\path [draw, \forestoption{edge}]
+			(!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+		},
+		before typesetting nodes={
+			if n=1
+			{insert before={[,phantom]}}
+			{}
+		},
+		fit=band,
+		before computing xy={l=15pt},
+	}
+[/
+	[EFI/
+		[BOOT/
+			[BOOTIA32.EFI]
+			[BOOTX64.EFI]
+		]
+		[<os>/
+			[BOOTIA32.EFI]
+			[BOOTX64.EFI]
+		]
+	]
+]
+\end{forest}\\
+Where \texttt{<os>/} represents the platform-specific bootloader directory.
+
+\input{Bootloader/EFI/mbr.tex}
+\input{Bootloader/EFI/gpt.tex}
+\input{Bootloader/EFI/boot_efi.tex}
