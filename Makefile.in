@@ -1,0 +1,20 @@
+TOPDIR := .
+include $(TOPDIR)/Makedefs
+
+VPATH = @srcdir@
+
+BLOCK_SIZE := @block_size@
+ARCHITECTURE := @architecture@
+BITS32 := @bit32@
+BITS64 := @bit64@
+FORMAT := @format@
+BIOS := @bios@
+EFI := @efi@
+
+clean:
+	@$(RM) config.log config.status
+	@$(RM) -r autom4te.cache
+
+.PHONY: clean-all
+clean-all: clean
+	@$(RM) Makefile

@@ -37,3 +37,27 @@ First build the toolchain:
 cd toolchain
 make [-jn]
 ```
+
+Then the rest:
+
+```Bash
+./configure <options>
+make
+```
+
+## Configure Options
+
+```
+--with-block-size=<[512], 4096>
+--with-arch=<[x86]>
+```
+
+### x86 Options
+
+```
+--with-32bit
+--with-64bit
+--with-format=<[mbr], gpt>
+--with-bios
+--with-efi
+```
