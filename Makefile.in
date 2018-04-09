@@ -1,4 +1,4 @@
-TOPDIR := .
+TOPDIR := @srcdir@
 include $(TOPDIR)/Makedefs
 
 VPATH = @srcdir@
