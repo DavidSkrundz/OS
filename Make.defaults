@@ -15,6 +15,16 @@ BUILD_DIR := .build
 SRC_DIR := src
 
 # Tools
+AS = $(TOPDIR)/toolchain/compiler/$(TARGET)/bin/$(TARGET)-as
+ASFLAGS :=
+
+LD = $(TOPDIR)/toolchain/compiler/$(TARGET)/bin/$(TARGET)-ld
+LDFLAGS := --script link.ld
+
+NATIVE_GCC = $(TOPDIR)/toolchain/compiler/native/bin/gcc
+GCC = $(TOPDIR)/toolchain/compiler/$(TARGET)/bin/$(TARGET)-gcc
+GCCFLAGS :=
+
 TEX := xelatex
 
 QEMU_X86 := qemu-system-i386
