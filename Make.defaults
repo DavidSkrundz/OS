@@ -12,6 +12,8 @@ UNAME := $(shell uname -s)
 
 # Directories
 BUILD_DIR := .build
+OBJ_DIR := $(BUILD_DIR)/.obj
+INTERMEDIATE_DIR := $(BUILD_DIR)/.intermediate
 SRC_DIR := src
 
 # Tools

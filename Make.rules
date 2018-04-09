@@ -1,6 +1,20 @@
 $(BUILD_DIR):
 	@mkdir -p $@
 
+$(OBJ_DIR): | $(BUILD_DIR)
+	@mkdir -p $@
+
+$(INTERMEDIATE_DIR): | $(BUILD_DIR)
+	@mkdir -p $@
+
+
+$(OBJ_DIR)/%.o: $(INTERMEDIATE_DIR)/%.asm | $(OBJ_DIR)
+	@$(AS) $(ASFLAGS) -o $@ $<
+
+.PRECIOUS: $(INTERMEDIATE_DIR)/%.asm
+$(INTERMEDIATE_DIR)/%.asm: $(SRC_DIR)/%.S | $(INTERMEDIATE_DIR)
+	@$(NATIVE_GCC) -E $(GCCFLAGS) -o $@ $^
+
 %.pdf: %.tex
 	@$(TEX) $^
 	@$(TEX) $^
