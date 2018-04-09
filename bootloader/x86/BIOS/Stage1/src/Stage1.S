@@ -64,6 +64,16 @@ Program:
 	LEAw String, %SI
 	CALL PrintString
 
+	CALL CheckDiskLBAExtension
+	JC ExtensionError
+
+	JMP Halt
+
+ExtensionError:
+	LEAw ExtensionErrorString, %SI
+	CALL PrintString
+	JMP Halt
+
 Halt:
 	CLI
 	HLT
@@ -77,3 +87,6 @@ Halt:
 
 String:
 	.asciz "A string to print\r\n"
+
+ExtensionErrorString:
+	.asciz "BIOS does not support LBA addressing.\r\n"
