@@ -44,6 +44,15 @@ endef
 $(foreach folder,$(FOLDERS),$(eval $(call RECURSE_TEMPLATE,$(folder))))
 
 
+.PHONY: run_x86
+run_x86: $(IMAGE)
+	@$(QEMU_X86) $(QEMUFLAGS)$<
+
+.PHONY: run_x64
+run_x64: $(IMAGE)
+	@$(QEMU_X64) $(QEMUFLAGS)$<
+
+
 clean:
 	@$(RM) config.log config.status
 	@$(RM) -r autom4te.cache
