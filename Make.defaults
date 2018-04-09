@@ -30,3 +30,7 @@ TEX := xelatex
 QEMU_X86 := qemu-system-i386
 QEMU_X64 := qemu-system-x86_64
 QEMUFLAGS := -monitor stdio -drive format=raw,file=
+
+DD := dd
+DDCONV := conv=notrunc
+DDREDIRECT := >& /dev/null
