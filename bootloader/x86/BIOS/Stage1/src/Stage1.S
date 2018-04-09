@@ -67,12 +67,31 @@ Program:
 	CALL CheckDiskLBAExtension
 	JC ExtensionError
 
+	MOVw $BOOT_SEGMENT, %AX
+	MOVw %AX, %DS
+	MOVw $0, %AX
+	MOVw %AX, %SI
+	MOVw $1, %AX
+	MOVw $1, %BX
+	CALL ReadDisk
+	JC ReadError
+
+	MOVw $0, %AX
+	MOVb 0, %AL
+
 	JMP Halt
 
 ExtensionError:
 	LEAw ExtensionErrorString, %SI
 	CALL PrintString
 	JMP Halt
+
+ReadError:
+	MOVw $RELOCATE_SEGMENT, %AX
+	MOVw %AX, %DS
+	LEAw ReadErrorString, %SI
+	CALL PrintString
+	JMP .
 
 Halt:
 	CLI
@@ -90,3 +109,6 @@ String:
 
 ExtensionErrorString:
 	.asciz "BIOS does not support LBA addressing.\r\n"
+
+ReadErrorString:
+	.asciz "Could not read disk.\r\n"
