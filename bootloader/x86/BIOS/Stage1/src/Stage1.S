@@ -61,6 +61,8 @@ Segmentation:
 	STI
 
 Program:
+	CALL ClearScreen
+
 	LEAw String, %SI
 	CALL PrintString
 
