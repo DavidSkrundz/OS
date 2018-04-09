@@ -590,6 +590,7 @@ bit64
 bit32
 architecture
 block_size
+makeflags
 target_alias
 host_alias
 build_alias
@@ -631,6 +632,7 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
+with_print_directory
 with_block_size
 with_arch
 with_32bit
@@ -1250,6 +1252,8 @@ if test -n "$ac_init_help"; then
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --without-print-directory
+                          prevent make from printing directories
   --with-block-size=<size>
                           specify the block size ([512], 4096)
   --with-arch=<arch>      specify the architecture ([x86])
@@ -1691,6 +1695,20 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+# Check whether --with-print-directory was given.
+if test "${with_print_directory+set}" = set; then :
+  withval=$with_print_directory;
+fi
+
+
+if test "$with_print_directory" = "no"
+then
+	make_flags="$make_flags --no-print-directory"
+fi
+
+
+
+
 # Check whether --with-block-size was given.
 if test "${with_block_size+set}" = set; then :
   withval=$with_block_size;
@@ -1804,6 +1822,8 @@ then
 fi
 
 
+
+makeflags=$make_flags
 
 block_size=$with_block_size
 

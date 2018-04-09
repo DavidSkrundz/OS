@@ -3,6 +3,20 @@ AC_INIT([OS], [0.0])
 
 
 dnl ****************************************************************************
+dnl * Make flags
+dnl ****************************************************************************
+AC_ARG_WITH([print-directory],
+            [AS_HELP_STRING([--without-print-directory],
+                            [prevent make from printing directories])])
+
+if test "$with_print_directory" = "no"
+then
+	make_flags="$make_flags --no-print-directory"
+fi
+
+
+
+dnl ****************************************************************************
 dnl * Block Size
 dnl ****************************************************************************
 AC_ARG_WITH([block-size],
@@ -108,6 +122,7 @@ fi
 dnl ****************************************************************************
 dnl * Output
 dnl ****************************************************************************
+AC_SUBST([makeflags], [$make_flags])
 AC_SUBST([block_size], [$with_block_size])
 AC_SUBST([architecture], [$with_arch])
 AC_SUBST([bit32], [$with_32bit])

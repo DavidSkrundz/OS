@@ -59,6 +59,7 @@ make run_x64
 ## Configure Options
 
 ```
+--without-print-directory
 --with-block-size=<[512], 4096>
 --with-arch=<[x86]>
 ```

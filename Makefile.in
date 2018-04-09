@@ -2,6 +2,7 @@ TOPDIR := @srcdir@
 include $(TOPDIR)/Makedefs
 
 VPATH = @srcdir@
+MAKEFLAGS += @makeflags@
 
 BLOCK_SIZE := @block_size@
 ARCHITECTURE := @architecture@
