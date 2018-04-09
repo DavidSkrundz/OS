@@ -3,7 +3,9 @@ export BLOCK_SIZE
 IMAGE_REQUIREMENTS :=
 
 X86_BIOS_STAGE1 := $(TOPDIR)/bootloader/x86/BIOS/Stage1/.build/Stage1.bin
+X86_BIOS_STAGE2 := $(TOPDIR)/bootloader/x86/BIOS/Stage2/.build/Stage2.bin
 
 ifeq ($(BIOS), yes)
 	IMAGE_REQUIREMENTS += $(X86_BIOS_STAGE1)
+	IMAGE_REQUIREMENTS += $(X86_BIOS_STAGE2)
 endif

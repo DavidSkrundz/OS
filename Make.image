@@ -5,3 +5,7 @@ ifeq ($(BIOS), yes)
 	@$(DD) if=$(X86_BIOS_STAGE1) of=$@ bs=1 count=510 $(DDCONV) $(DDREDIRECT)
 	@printf '\x55\xAA' | $(DD) of=$@ bs=1 seek=510 count=2 $(DDCONV) $(DDREDIRECT)
 endif
+
+ifeq ($(FORMAT), mbr)
+	@$(DD) if=$(X86_BIOS_STAGE2) of=$@ bs=512 seek=1 count=1 $(DDCONV) $(DDREDIRECT)
+endif
