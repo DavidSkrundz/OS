@@ -29,6 +29,18 @@ __check_defined = \
   $(if $(value $1),, \
     $(error Undefined $1 $(if $2,($2))))
 
+# Store a variable so that a target is rebuilt when it changes
+#
+# Calling: `$(call declare_variable, var)`
+declare_variable = \
+	$(eval $(call __declare_variable,$(strip $1)))
+define __declare_variable
+  $1: phony | $(BUILD_DIR)
+	@if [[ `cat $(BUILD_DIR)/$1 2>&1` != '$($1)' ]]; then \
+		echo -n $($1) > $(BUILD_DIR)/$1; \
+	fi
+endef
+
 ifeq ($(UNAME), Darwin)
   # Get the path where brew installed the library
   #

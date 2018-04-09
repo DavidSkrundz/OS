@@ -5,6 +5,7 @@
 .DEFAULT_GOAL := all
 .PHONY: all
 .PHONY: clean
+.PHONY: phony
 
 # Shell
 SHELL := /bin/bash
