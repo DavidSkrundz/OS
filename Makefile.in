@@ -12,7 +12,7 @@ BIOS := @bios@
 EFI := @efi@
 
 
-FOLDERS := 
+FOLDERS := bootloader
 
 IMAGE := disk.hdd
 all: $(IMAGE)

@@ -1,2 +1,7 @@
 $(IMAGE): $(IMAGE_REQUIREMENTS)
 	@touch $@
+
+ifeq ($(BIOS), yes)
+	@$(DD) if=$(X86_BIOS_STAGE1) of=$@ bs=1 count=510 $(DDCONV) $(DDREDIRECT)
+	@printf '\x55\xAA' | $(DD) of=$@ bs=1 seek=510 count=2 $(DDCONV) $(DDREDIRECT)
+endif
