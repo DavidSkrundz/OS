@@ -6,6 +6,7 @@ FOLDERS = $(shell ls -1 -F | grep / | sed 's/\(.*\)\//\1/')
 STAGE2_BIN := Stage2/$(BUILD_DIR)/Stage2.bin
 
 all:
+	@$(MAKE) -C Stage2 $@
 	@$(MAKE) -C Stage1 $@
 
 clean:
