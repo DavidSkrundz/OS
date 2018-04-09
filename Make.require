@@ -1,3 +1,5 @@
+export BLOCK_SIZE
+
 IMAGE_REQUIREMENTS :=
 
 X86_BIOS_STAGE1 := $(TOPDIR)/bootloader/x86/BIOS/Stage1/.build/Stage1.bin
