@@ -19,7 +19,7 @@ SRC_DIR := src
 
 # Tools
 AS = $(TOPDIR)/toolchain/compiler/$(TARGET)/bin/$(TARGET)-as
-ASFLAGS :=
+ASFLAGS := --fatal-warnings
 
 LD = $(TOPDIR)/toolchain/compiler/$(TARGET)/bin/$(TARGET)-ld
 LDFLAGS := --script link.ld
