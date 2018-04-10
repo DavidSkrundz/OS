@@ -48,3 +48,7 @@ ifeq ($(UNAME), Darwin)
   brew_path = \
 	$(shell brew info $1 | head -n4 | tail -n1 | cut -d' ' -f1)
 endif
+
+
+# Programs
+FILE_SIZE := $(TOPDIR)/toolchain/make/fileSize.sh

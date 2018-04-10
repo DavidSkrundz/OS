@@ -19,6 +19,11 @@ all: $(STAGE1_BIN)
 
 $(STAGE1_BIN): $(STAGE1_OBJ)
 	@$(LD) $(LDFLAGS) -o $@ $^
+	@if [[ `$(FILE_SIZE) $@` -gt 446 ]]; then \
+		echo "BIOS stage1 bootloader too large:"`$(FILE_SIZE) $@`"/446 bytes"; \
+		rm -f $@; \
+		exit 1; \
+	fi
 
 $(STAGE1_ASM): $(INTERMEDIATE_DIR)/%.asm: $(SRC_DIR)/%.S \
                                           BLOCK_SIZE \
