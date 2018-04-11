@@ -78,10 +78,8 @@ Program:
 	CALL ReadDisk
 	JC ReadError
 
-	MOVw $0, %AX
-	MOVb 0, %AL
+	JMP $BOOT_SEGMENT, $Start
 
-	JMP Halt
 
 ExtensionError:
 	LEAw ExtensionErrorString, %SI
@@ -107,7 +105,7 @@ Halt:
 .section .data
 
 String:
-	.asciz "A string to print\r\n"
+	.asciz "Stage 1 print\r\n"
 
 ExtensionErrorString:
 	.asciz "BIOS does not support LBA addressing.\r\n"
