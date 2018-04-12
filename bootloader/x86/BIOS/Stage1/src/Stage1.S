@@ -6,12 +6,14 @@
 | Preprocessor Defines                                                         |
 \******************************************************************************/
 /// BLOCK_SIZE - Bytes per sector
+/// STAGE2_LBA  - Starting LBA of Stage2
 
 
 /******************************************************************************\
 | Constants                                                                    |
 \******************************************************************************/
 .set BYTES_PER_SECTOR, BLOCK_SIZE
+.set LBA_TO_LOAD, STAGE2_LBA
 
 // End of free space
 .set STACK_SEGMENT, 0x9FC0
@@ -73,7 +75,7 @@ Program:
 	MOVw %AX, %DS
 	MOVw $0, %AX
 	MOVw %AX, %SI
-	MOVw $1, %AX
+	MOVw $LBA_TO_LOAD, %AX
 	MOVw $1, %BX
 	CALL ReadDisk
 	JC ReadError

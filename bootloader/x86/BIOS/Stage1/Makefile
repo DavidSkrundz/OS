@@ -8,9 +8,11 @@ STAGE1_OBJ = $(STAGE1_SRC:$(SRC_DIR)/%.S=$(OBJ_DIR)/%.o)
 STAGE1_BIN := $(BUILD_DIR)/Stage1.bin
 
 GCCFLAGS += -DBLOCK_SIZE=$(BLOCK_SIZE)
+GCCFLAGS += -DSTAGE2_LBA=$(STAGE2_LBA)
 
 
 $(call declare_variable, BLOCK_SIZE)
+$(call declare_variable, STAGE2_LBA)
 
 
 TARGET := i386-elf
@@ -26,9 +28,10 @@ $(STAGE1_BIN): $(STAGE1_OBJ)
 	fi
 
 $(STAGE1_ASM): $(INTERMEDIATE_DIR)/%.asm: $(SRC_DIR)/%.S \
-                                          BLOCK_SIZE \
+                                          BLOCK_SIZE STAGE2_LBA \
                                         | $(INTERMEDIATE_DIR)
 	@:$(call assert_defined, BLOCK_SIZE, Bytes per sector)
+	@:$(call assert_defined, STAGE2_LBA, Starting LBA of Stage2)
 	@$(NATIVE_GCC) -E $(GCCFLAGS) -o $@ $<
 
 clean:
