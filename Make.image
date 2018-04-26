@@ -7,5 +7,5 @@ ifeq ($(BIOS), yes)
 endif
 
 ifeq ($(FORMAT), mbr)
-	@$(DD) if=$(X86_BIOS_STAGE2) of=$@ bs=512 seek=1 count=1 $(DDCONV) $(DDREDIRECT)
+	@$(DD) if=$(X86_BIOS_STAGE2) of=$@ bs=$(BLOCK_SIZE) seek=1 count=1 $(DDCONV) $(DDREDIRECT)
 endif
