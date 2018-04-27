@@ -7,6 +7,7 @@
 \******************************************************************************/
 /// BLOCK_SIZE - Bytes per sector
 /// STAGE2_LBA  - Starting LBA of Stage2
+/// STAGE2_SIZE - Size of Stage2 in sectors
 
 
 /******************************************************************************\
@@ -14,6 +15,7 @@
 \******************************************************************************/
 .set BYTES_PER_SECTOR, BLOCK_SIZE
 .set LBA_TO_LOAD, STAGE2_LBA
+.set SECTORS_TO_LOAD, STAGE2_SIZE
 
 // End of free space
 .set STACK_SEGMENT, 0x9FC0
@@ -76,7 +78,7 @@ Program:
 	MOVw $0, %AX
 	MOVw %AX, %SI
 	MOVw $LBA_TO_LOAD, %AX
-	MOVw $1, %BX
+	MOVw $SECTORS_TO_LOAD, %BX
 	CALL ReadDisk
 	JC ReadError
 
