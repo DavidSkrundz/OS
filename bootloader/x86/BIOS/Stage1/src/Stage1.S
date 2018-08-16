@@ -43,7 +43,7 @@ Relocate:
 	MOVw $RELOCATE_SEGMENT, %AX
 	MOVw %AX, %ES
 	// Set relocation counter
-	MOVw $WORDS_TO_RELOCATE, %cx
+	MOVw $WORDS_TO_RELOCATE, %CX
 	// Clear offsets - segments will be used instead
 	XOR %SI, %SI
 	XOR %DI, %DI
