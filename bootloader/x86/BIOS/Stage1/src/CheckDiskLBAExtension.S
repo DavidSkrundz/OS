@@ -2,12 +2,12 @@
 .section .text
 .org 0x0
 
-// Check Extensions Present
-//
-// Input:
-//  - `DL`: Drive index
-// Output:
-//  - `Carry bit`: clear if LBA extension is present
+/// Check Extensions Present
+///
+/// Input:
+///  - `DL`: Drive index
+/// Output:
+///  - `Carry bit`: clear if LBA extension is present
 .global CheckDiskLBAExtension
 CheckDiskLBAExtension:
 	PUSHA
