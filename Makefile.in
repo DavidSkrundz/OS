@@ -23,11 +23,11 @@ include $(TOPDIR)/Make.require
 include $(TOPDIR)/Make.image
 
 
-$(IMAGE_REQUIREMENTS): RECURSE_MAKE
+$(IMAGE_REQUIREMENTS): .RECURSE_MAKE
 	@
 
-.PHONY: RECURSE_MAKE
-RECURSE_MAKE:
+.PHONY: .RECURSE_MAKE
+.RECURSE_MAKE:
 	@
 
 define RECURSE_TEMPLATE =
@@ -38,7 +38,7 @@ define RECURSE_TEMPLATE =
   $(1)-clean:
 	@$$(MAKE) -C $(1) clean
 
-  RECURSE_MAKE: $(1)-all
+  .RECURSE_MAKE: $(1)-all
   clean: $(1)-clean
 endef
 
