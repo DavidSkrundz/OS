@@ -51,4 +51,5 @@ endif
 
 
 # Programs
-FILE_SIZE := $(TOPDIR)/toolchain/make/fileSize.sh
+FILE_SIZE_BYTES := $(TOPDIR)/toolchain/make/fileSizeBytes.sh
+FILE_SIZE_SECTORS := $(TOPDIR)/toolchain/make/fileSizeSectors.sh

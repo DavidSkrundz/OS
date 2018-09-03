@@ -23,8 +23,8 @@ all: $(STAGE1_BIN)
 
 $(STAGE1_BIN): $(STAGE1_OBJ)
 	@$(LD) $(LDFLAGS) -o $@ $^
-	@if [[ `$(FILE_SIZE) $@` -gt 446 ]]; then \
-		echo "BIOS stage1 bootloader too large:"`$(FILE_SIZE) $@`"/446 bytes"; \
+	@if [[ `$(FILE_SIZE_BYTES) $@` -gt 446 ]]; then \
+		echo "BIOS stage1 bootloader too large:"`$(FILE_SIZE_BYTES) $@`"/446 bytes"; \
 		rm -f $@; \
 		exit 1; \
 	fi
